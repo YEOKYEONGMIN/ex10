@@ -16,6 +16,12 @@
             android:name=".ResultActivity2"
             android:exported="true" />
         <activity
+            android:name=".SecondActivity2"
+            android:exported="true" />
+        <activity
+            android:name=".ex3"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

@@ -6,13 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    RadioButton second, third;
+    RadioButton second, third, rdoSum, rdoSub, rdoMul, rdoDiv;
     Button btnInc, btnDec, btnFinish;
     ImageView image[] = new ImageView[9];
     Integer imageId[] = {R.id.iv1,R.id.iv2,R.id.iv3,R.id.iv4,R.id.iv5,
@@ -25,12 +26,16 @@ public class MainActivity extends AppCompatActivity {
 //        setContentView(R.layout.ex10_01);
 //        setContentView(R.layout.ex10_1);
 //        setContentView(R.layout.ex10_07);
-        setContentView(R.layout.ex10_09);
+//        setContentView(R.layout.ex10_09);
+//        setContentView(R.layout.ex10_16);
+        setContentView(R.layout.ex10_3);
 
 //        ex01();
 //        ex1();
 //        ex07();
-        ex09();
+//        ex09();
+//        ex16();
+        ex3();
     }
 
     void ex01(){
@@ -121,6 +126,59 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("ImageName",imgName);
 
                 startActivity(intent);
+            }
+        });
+    }
+
+    void ex16(){
+        Button btnNewActivity = (Button) findViewById(R.id.btnNewActivity);
+        btnNewActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText edtNum1 = (EditText) findViewById(R.id.edtNum1);
+                EditText edtNum2 = (EditText) findViewById(R.id.edtNum2);
+                Intent intent = new Intent(getApplicationContext(), SecondActivity2.class);
+                intent.putExtra("Num1", Integer.parseInt(edtNum1.getText().toString()));
+                intent.putExtra("Num2", Integer.parseInt(edtNum2.getText().toString()));
+                startActivityForResult(intent,0);
+            }
+        });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            int hap = data.getIntExtra("Hap", 0);
+            Toast.makeText(getApplicationContext(), "합계 : " + hap, Toast.LENGTH_SHORT).show();
+        }
+
+    }
+    void ex3(){
+        Button btnCalc = (Button) findViewById(R.id.btnCalc);
+        btnCalc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText edtNum1 = (EditText) findViewById(R.id.edtNum1);
+                EditText edtNum2 = (EditText) findViewById(R.id.edtNum2);
+                rdoSum = (RadioButton) findViewById(R.id.rdoSum);
+                rdoSub = (RadioButton) findViewById(R.id.rdoSub);
+                rdoMul = (RadioButton) findViewById(R.id.rdoMul);
+                rdoDiv = (RadioButton) findViewById(R.id.rdoDiv);
+                int i =0;
+                if(rdoSum.isChecked()){
+                    i = 1;
+                } else if(rdoSub.isChecked()){
+                    i = 2;
+                } else if (rdoMul.isChecked()){
+                    i = 3;
+                } else if(rdoDiv.isChecked()){
+                    i = 4;
+                }
+                Intent intent = new Intent(getApplicationContext(), ex3.class);
+                intent.putExtra("Num1", Integer.parseInt(edtNum1.getText().toString()));
+                intent.putExtra("Num2", Integer.parseInt(edtNum2.getText().toString()));
+                intent.putExtra("Calc",i);
+                startActivityForResult(intent,0);
             }
         });
     }
